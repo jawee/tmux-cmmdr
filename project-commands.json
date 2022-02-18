@@ -1,0 +1,17 @@
+{
+   "projects": [
+       {
+           "name": "commandizizer",
+            "windows": [
+                {
+                    "name": "zsh",
+                    "command": "zsh"
+                }, 
+                {
+                    "name": "run",
+                    "command": "go run cmd/main.go"
+                }
+            ]
+        }  
+    ]
+}
