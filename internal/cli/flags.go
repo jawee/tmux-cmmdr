@@ -11,8 +11,9 @@ type CliArguments struct {
 }
 
 func GetArguments(progname string, args []string) (*CliArguments, error) {
-    for _, arg := range args {
-        fmt.Println(arg)
+
+    if len(args) == 0 {
+        return nil, fmt.Errorf("No arguments provided")
     }
 
     flags := flag.NewFlagSet(progname, flag.ContinueOnError)
@@ -25,6 +26,10 @@ func GetArguments(progname string, args []string) (*CliArguments, error) {
     err := flags.Parse(args)
     if err != nil {
         return nil, err
+    }
+
+    if projectName == "" {
+        return nil, fmt.Errorf("No project name provided")
     }
 
     return &CliArguments{ProjectName: projectName}, nil
