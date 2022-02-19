@@ -1,8 +1,8 @@
 package main
 
 import (
+	"commandizizer/internal/cli"
 	"encoding/json"
-	"flag"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -28,11 +28,13 @@ type Window struct {
 }
 
 func main() {
-    var nameFlag = flag.String("name", "", "name of the project")
-    //parse flag
-    flag.Parse()
+    cliArgs, err := cli.GetArguments(os.Args[0], os.Args[1:])
+    if err != nil {
+        fmt.Println(err)
+        os.Exit(1)
+    }
 
-    name := *nameFlag
+    name := cliArgs.ProjectName
 
     fmt.Printf("Name: %s\n", name)
     pwd, _ := os.Getwd()
