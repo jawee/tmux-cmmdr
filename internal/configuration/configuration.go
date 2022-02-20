@@ -3,8 +3,6 @@ package configuration
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
-	"os"
 )
 
 type ProjectsConfig struct {
@@ -26,16 +24,12 @@ type WindowCommand struct {
     Command string `json:"command"`
 }
 
-func GetProjectsConfig() *ProjectsConfig {
-    pwd, _ := os.Getwd()
-    jsonFile, err := ioutil.ReadFile(pwd + "/project-commands.json")
-    if err != nil {
-        fmt.Println(err)
-    }   
+func GetProjectsConfig(jsonFile []byte) (*ProjectsConfig, error) {
     var projectsConfig ProjectsConfig
-    err = json.Unmarshal(jsonFile, &projectsConfig)
+    err := json.Unmarshal(jsonFile, &projectsConfig)
     if err != nil {
         fmt.Println(err)
+        return nil, err
     }
-    return &projectsConfig
+    return &projectsConfig, nil
 }

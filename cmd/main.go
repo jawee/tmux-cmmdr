@@ -4,10 +4,20 @@ import (
 	"commandizizer/internal/cli"
 	"commandizizer/internal/configuration"
 	"fmt"
+	"io/ioutil"
 	"os"
 )
 
 
+func getJsonFileBytes() ([]byte, error) {
+    pwd, _ := os.Getwd()
+    jsonFile, err := ioutil.ReadFile(pwd + "/project-commands.json")
+    if err != nil {
+        fmt.Println(err)
+        return nil, err
+    }
+    return jsonFile, nil
+}
 func main() {
     // tmux, err := exec.LookPath("tmux")
     // if err != nil {
@@ -36,9 +46,19 @@ func main() {
 
     fmt.Printf("Name: %s\n", name)
 
-    projectCommands := configuration.GetProjectsConfig()
+    jsonFile, err := getJsonFileBytes()
+    if err != nil {
+        fmt.Println(err)
+        os.Exit(1)
+    }
 
-    for _, project := range projectCommands.Projects {
+    projectsConfig, err := configuration.GetProjectsConfig(jsonFile)
+    if err != nil {
+        fmt.Println(err)
+        os.Exit(1)
+    }
+
+    for _, project := range projectsConfig.Projects {
         if project.Name == name {
             for _, window := range project.Windows {
                 for _, command := range window.Commands {
