@@ -52,19 +52,17 @@ func main() {
         os.Exit(1)
     }
 
-    projectsConfig, err := configuration.GetProjectsConfig(jsonFile)
+    projectsConfig, err := configuration.New(jsonFile)
     if err != nil {
         fmt.Println(err)
         os.Exit(1)
     }
 
-    for _, project := range projectsConfig.Projects {
-        if project.Name == name {
-            for _, window := range project.Windows {
-                for _, command := range window.Commands {
-                    fmt.Printf("%s\n", command)
-                }
-            }
+    project := projectsConfig.GetProject(name)
+
+    for _, window := range project.Windows {
+        for _, command := range window.Commands {
+            fmt.Printf("%s\n", command)
         }
     }
 }

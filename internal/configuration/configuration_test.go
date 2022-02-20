@@ -12,9 +12,9 @@ func getTestJson() []byte {
     return buffer.Bytes()
 }
 
-func TestGetConfiguration(t *testing.T) {
+func TestNewConfiguration(t *testing.T) {
     bytes := getTestJson()
-    config, err := GetProjectsConfig(bytes)
+    config, err := New(bytes)
 
     if err != nil {
         t.Errorf("Error: %s", err)
@@ -28,3 +28,41 @@ func TestGetConfiguration(t *testing.T) {
     }
 }
 
+func TestGetProject(t *testing.T) {
+    bytes := getTestJson()
+    config, err := New(bytes)
+
+    if err != nil {
+        t.Errorf("Error: %s", err)
+    }
+    if config == nil {
+        t.Error("config is nil")
+    }
+
+    project := config.GetProject("commandizizer")
+
+    if project == nil {
+        t.Error("project is nil")
+    }
+    if project.Name != "commandizizer" {
+        t.Errorf("Expected: commandizizer, got: %s", project.Name)
+    }
+}
+
+func TestGetProjectDoesNotExist(t *testing.T) {
+    bytes := getTestJson()
+    config, err := New(bytes)
+
+    if err != nil {
+        t.Errorf("Error: %s", err)
+    }
+    if config == nil {
+        t.Error("config is nil")
+    }
+
+    project := config.GetProject("does-not-exist")
+
+    if project != nil {
+        t.Error("project is not nil")
+    }
+}
