@@ -1,17 +1,32 @@
 {
-   "projects": [
-       {
-           "name": "commandizizer",
+    "projects": [
+        {
+            "name": "commandizizer",
             "windows": [
                 {
                     "name": "zsh",
-                    "command": "zsh"
+                    "commands": [
+                        {"command": "zsh"}
+                    ]
                 }, 
                 {
                     "name": "run",
-                    "command": "go run cmd/main.go"
+                    "commands": [
+                        { "command": "go run cmd/main.go" }
+                    ]
                 }
             ]
-        }  
+        },
+        {
+            "name": "commandizizer-cli",
+            "windows": [
+                {
+                    "name": "run",
+                    "commands": [
+                        { "command": "go run cmd/main.go" }
+                    ]
+                }
+            ]
+        }
     ]
 }

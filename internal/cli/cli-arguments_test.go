@@ -12,7 +12,7 @@ func (e *TestError) Error() string {
 }
 
 func TestNoProjectNameFlag(t *testing.T) {
-    _, err := GetArguments("prog", []string{})
+    _, err := New("prog", []string{})
 
     if err == nil {
         t.Errorf("Expected error, got nil")
@@ -20,7 +20,7 @@ func TestNoProjectNameFlag(t *testing.T) {
 }
 
 func TestNoProjectName(t *testing.T) {
-    cliArgs, err := GetArguments("prog", []string{"-project-name"})
+    cliArgs, err := New("prog", []string{"-project-name"})
 
     if cliArgs != nil {
         t.Errorf("Expected nil, got %v", cliArgs)
@@ -32,7 +32,7 @@ func TestNoProjectName(t *testing.T) {
 }
 
 func TestEmptyProjectName(t *testing.T) {
-    cliArgs, err := GetArguments("prog", []string{"-project-name", ""})
+    cliArgs, err := New("prog", []string{"-project-name", ""})
 
     if cliArgs != nil {
         t.Errorf("Expected nil, got %v", cliArgs)
@@ -67,7 +67,7 @@ func TestProjectNameRequired(t *testing.T) {
     }
 
     for _, test := range tests {
-        cliArgs, err := GetArguments("prog", test.args)
+        cliArgs, err := New("prog", test.args)
         if test.err == nil {
             if err != nil {
                 t.Errorf("Error parsing arguments: %s", err)

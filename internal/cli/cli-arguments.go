@@ -10,7 +10,12 @@ type CliArguments struct {
     ProjectName string
 }
 
-func GetArguments(progname string, args []string) (*CliArguments, error) {
+
+func New(program string, args []string) (*CliArguments, error) {
+    return getArguments(program, args)
+}
+
+func getArguments(progname string, args []string) (*CliArguments, error) {
 
     if len(args) == 0 {
         return nil, fmt.Errorf("No arguments provided")

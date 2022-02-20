@@ -2,33 +2,31 @@ package main
 
 import (
 	"commandizizer/internal/cli"
-	"encoding/json"
+	"commandizizer/internal/configuration"
 	"fmt"
-	"io/ioutil"
 	"os"
 )
 
-// create type for project-commands.json
-//type ProjectCommands struct {
-//    Commands []Command `json:"commands"`
-//}
-
-type ProjectCommands struct {
-    Projects []Project `json:"projects"`
-}
-
-type Project struct {
-    Name string `json:"name"`
-    Windows []Window `json:"windows"`
-}
-
-type Window struct {
-    Name string `json:"name"`
-    Command string `json:"command"`
-}
 
 func main() {
-    cliArgs, err := cli.GetArguments(os.Args[0], os.Args[1:])
+    // tmux, err := exec.LookPath("tmux")
+    // if err != nil {
+    //     fmt.Printf("tmux not found")
+    //     os.Exit(1)
+    // }
+    //
+    // cmd := exec.Command(tmux, "new-window", "-t", "commandizizer",  "-d", "-n", "dostuff")
+    // cmd2 := exec.Command(tmux, "send-keys", "-t", "commandizizer:dostuff", "echo 'hello world'", "Enter")
+    // err = cmd.Run()
+    // if err != nil {
+    //     fmt.Println(err)
+    // }
+    // err = cmd2.Run()
+    // if err != nil {
+    //     fmt.Println(err)
+    // }
+
+    cliArgs, err := cli.New(os.Args[0], os.Args[1:])
     if err != nil {
         fmt.Println(err)
         os.Exit(1)
@@ -37,21 +35,15 @@ func main() {
     name := cliArgs.ProjectName
 
     fmt.Printf("Name: %s\n", name)
-    pwd, _ := os.Getwd()
-    jsonFile, err := ioutil.ReadFile(pwd + "/project-commands.json")
-    if err != nil {
-        fmt.Println(err)
-    }   
-    var projectCommands ProjectCommands
-    err = json.Unmarshal(jsonFile, &projectCommands)
-    if err != nil {
-        fmt.Println(err)
-    }
+
+    projectCommands := configuration.GetProjectsConfig()
 
     for _, project := range projectCommands.Projects {
         if project.Name == name {
             for _, window := range project.Windows {
-                fmt.Printf("%s -> %s: %s\n", project.Name,  window.Name, window.Command)
+                for _, command := range window.Commands {
+                    fmt.Printf("%s\n", command)
+                }
             }
         }
     }
