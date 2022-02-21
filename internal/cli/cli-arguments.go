@@ -2,8 +2,8 @@ package cli
 
 import (
 	"bytes"
+	"errors"
 	"flag"
-	"fmt"
 )
 
 type CliArguments struct {
@@ -18,7 +18,7 @@ func New(program string, args []string) (*CliArguments, error) {
 func getArguments(progname string, args []string) (*CliArguments, error) {
 
     if len(args) == 0 {
-        return nil, fmt.Errorf("No arguments provided")
+        return nil, errors.New("No arguments provided, project name is required")
     }
 
     flags := flag.NewFlagSet(progname, flag.ContinueOnError)
@@ -34,7 +34,7 @@ func getArguments(progname string, args []string) (*CliArguments, error) {
     }
 
     if projectName == "" {
-        return nil, fmt.Errorf("No project name provided")
+        return nil, errors.New("No project name provided")
     }
 
     return &CliArguments{ProjectName: projectName}, nil

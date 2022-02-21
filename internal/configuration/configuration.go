@@ -2,7 +2,7 @@ package configuration
 
 import (
 	"encoding/json"
-	"fmt"
+	"log"
 )
 
 type ProjectsConfig struct {
@@ -41,7 +41,7 @@ func getProjectsConfig(jsonFile []byte) (*ProjectsConfig, error) {
     var projectsConfig ProjectsConfig
     err := json.Unmarshal(jsonFile, &projectsConfig)
     if err != nil {
-        fmt.Println(err)
+        log.Println("Could not unmarshal json file", err)
         return nil, err
     }
     return &projectsConfig, nil
