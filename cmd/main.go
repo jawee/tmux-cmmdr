@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"os/exec"
 )
 
 
@@ -19,11 +20,11 @@ func getJsonFileBytes() ([]byte, error) {
     return jsonFile, nil
 }
 func main() {
-    // tmux, err := exec.LookPath("tmux")
-    // if err != nil {
-    //     fmt.Printf("tmux not found")
-    //     os.Exit(1)
-    // }
+    tmux, err := exec.LookPath("tmux")
+    if err != nil {
+        log.Printf("tmux not found")
+        os.Exit(1)
+    }
     //
     // cmd := exec.Command(tmux, "new-window", "-t", "commandizizer",  "-d", "-n", "dostuff")
     // cmd2 := exec.Command(tmux, "send-keys", "-t", "commandizizer:dostuff", "echo 'hello world'", "Enter")
@@ -60,9 +61,38 @@ func main() {
 
     project := projectsConfig.GetProject(name)
 
+    cmd := exec.Command(tmux, "has-session", "-t", name)
+
+    err = cmd.Run()
+    if err != nil {
+        cmd := exec.Command(tmux, "new-session", "-d", "-s", name)
+        err = cmd.Run()
+        if err != nil {
+            log.Println(err)
+            os.Exit(1)
+        }
+    }
+
+    log.Println("Session exists")
+
+
     for _, window := range project.Windows {
         for _, command := range window.Commands {
-            log.Printf("%s\n", command)
+            log.Printf("Creating window: %s\n", window.Name)
+            cmd := exec.Command(tmux, "new-window", "-t", name, "-n", window.Name, "-d")
+            err = cmd.Run()
+            if err != nil {
+                log.Println(err)
+                os.Exit(1)
+            }
+
+            log.Printf("Running command '%s' in window '%s\n", window.Name, command)
+            cmd = exec.Command(tmux, "send-keys", "-t", name + ":" + window.Name, command.Command, "Enter")
+            err = cmd.Run()
+            if err != nil {
+                log.Println(err)
+                os.Exit(1)
+            }
         }
     }
 }

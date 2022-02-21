@@ -4,9 +4,9 @@
             "name": "commandizizer",
             "windows": [
                 {
-                    "name": "zsh",
+                    "name": "echo",
                     "commands": [
-                        {"command": "zsh"}
+                        {"command": "echo $PATH"}
                     ]
                 }, 
                 {
