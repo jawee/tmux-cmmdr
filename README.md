@@ -1,8 +1,17 @@
-# tmux-cmmdr
+## tmux-cmmdr
 
 Creates tmux windows and sends commands to windows on the provided project tmux session.
 
-## Usage
+### Building From Source
+```
+git clone git@github.com:jawee/tmux-cmmdr.git
+cd tmux-cmmdr
+
+# Install it where you want
+go build -o ~/.local/bin/tmux-cmmdr ./cmd
+```
+
+### Usage
 
 ```bash
 tmux-cmmdr -project-name <projectname>
