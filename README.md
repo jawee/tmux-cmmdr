@@ -8,6 +8,7 @@ Creates tmux windows and sends commands to windows on the provided project tmux 
 - [ ] Initialize configuration file
 - [ ] Add to configuration file CLI
 - [ ] Remove from configuration file CLI
+- [ ] Handle git worktrees
 
 ### Building From Source
 ```
