@@ -4,9 +4,10 @@ Creates tmux windows and sends commands to windows on the provided project tmux 
 
 ### TODO
 
-[] Initialize configuration file
-[] Add to configuration file CLI
-[] Remove from configuration file CLI
+- [x] Basic tmux functionality
+- [ ] Initialize configuration file
+- [ ] Add to configuration file CLI
+- [ ] Remove from configuration file CLI
 
 ### Building From Source
 ```
