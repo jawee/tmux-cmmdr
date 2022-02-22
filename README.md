@@ -27,7 +27,7 @@ tmux-cmmdr -project-name <projectname>
 
 Example
 ```bash
-tmux-cmmdr - project-name tmux-cmmdr
+tmux-cmmdr -project-name tmux-cmmdr
 ```
 
 Example configuration
