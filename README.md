@@ -2,6 +2,12 @@
 
 Creates tmux windows and sends commands to windows on the provided project tmux session.
 
+### TODO
+
+[] Initialize configuration file
+[] Add to configuration file CLI
+[] Remove from configuration file CLI
+
 ### Building From Source
 ```
 git clone git@github.com:jawee/tmux-cmmdr.git
