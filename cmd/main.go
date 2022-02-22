@@ -1,12 +1,13 @@
 package main
 
 import (
-	"commandizizer/internal/cli"
-	"commandizizer/internal/configuration"
 	"io/ioutil"
 	"log"
 	"os"
 	"os/exec"
+
+	"github.com/jawee/tmux-cmmdr/internal/cli"
+	"github.com/jawee/tmux-cmmdr/internal/configuration"
 )
 
 
@@ -26,8 +27,8 @@ func main() {
         os.Exit(1)
     }
     //
-    // cmd := exec.Command(tmux, "new-window", "-t", "commandizizer",  "-d", "-n", "dostuff")
-    // cmd2 := exec.Command(tmux, "send-keys", "-t", "commandizizer:dostuff", "echo 'hello world'", "Enter")
+    // cmd := exec.Command(tmux, "new-window", "-t", "tmux-cmmdr",  "-d", "-n", "dostuff")
+    // cmd2 := exec.Command(tmux, "send-keys", "-t", "tmux-cmmdr:dostuff", "echo 'hello world'", "Enter")
     // err = cmd.Run()
     // if err != nil {
     //     fmt.Println(err)
