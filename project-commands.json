@@ -1,7 +1,7 @@
 {
     "projects": [
         {
-            "name": "commandizizer",
+            "name": "tmux-cmmdr",
             "windows": [
                 {
                     "name": "echo",
@@ -18,7 +18,7 @@
             ]
         },
         {
-            "name": "commandizizer-cli",
+            "name": "some-other-project",
             "windows": [
                 {
                     "name": "run",

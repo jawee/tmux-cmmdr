@@ -1,3 +1,3 @@
-module commandizizer
+module github.com/jawee/tmux-cmmdr
 
 go 1.17
