@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"os/exec"
+	"strconv"
 
 	"github.com/jawee/tmux-cmmdr/internal/cli"
 	"github.com/jawee/tmux-cmmdr/internal/configuration"
@@ -26,7 +27,8 @@ func main() {
         log.Printf("tmux not found")
         os.Exit(1)
     }
-    //
+
+
     // cmd := exec.Command(tmux, "new-window", "-t", "tmux-cmmdr",  "-d", "-n", "dostuff")
     // cmd2 := exec.Command(tmux, "send-keys", "-t", "tmux-cmmdr:dostuff", "echo 'hello world'", "Enter")
     // err = cmd.Run()
@@ -66,6 +68,7 @@ func main() {
 
     err = cmd.Run()
     if err != nil {
+
         cmd := exec.Command(tmux, "new-session", "-d", "-s", name)
         err = cmd.Run()
         if err != nil {
@@ -76,6 +79,11 @@ func main() {
 
     log.Println("Session exists")
 
+    isBare := isBareRepository()
+
+    if isBare {
+        log.Printf("Is bare")
+    }
 
     for _, window := range project.Windows {
         for _, command := range window.Commands {
@@ -96,4 +104,26 @@ func main() {
             }
         }
     }
+}
+
+func isBareRepository() bool {
+
+    // check if tmux session is a bare repository
+    // this should be somewhere
+    out, err := exec.Command("git", "rev-parse", "--is-bare-repository").Output()
+
+    if err != nil {
+        log.Printf("%s", err)
+        os.Exit(1)
+    }
+    log.Printf("Is Bare: %s", out)
+
+    b, err := strconv.ParseBool(string(out))
+
+    if err != nil {
+        log.Printf("%s", err)
+        os.Exit(1)
+    }
+
+    return b
 }
