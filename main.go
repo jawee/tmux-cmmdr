@@ -22,6 +22,19 @@ func getJsonFileBytes() ([]byte, error) {
     return jsonFile, nil
 }
 func main() {
+    wd, err := os.Getwd()
+    if err != nil {
+        log.Printf("%s\n", err)
+        os.Exit(1)
+    }
+    configDir, err := os.UserConfigDir()
+    if err != nil {
+        log.Printf("%s\n", err)
+        os.Exit(1)
+    }
+    log.Println(wd)
+    log.Println(configDir)
+
     tmux, err := exec.LookPath("tmux")
     if err != nil {
         log.Printf("tmux not found")
