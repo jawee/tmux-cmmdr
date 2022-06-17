@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"errors"
 	"flag"
+	"os"
 )
 
 type CliArguments struct {
@@ -38,4 +39,14 @@ func getArguments(progname string, args []string) (*CliArguments, error) {
     }
 
     return &CliArguments{ProjectName: projectName}, nil
+}
+
+func getCurrentProjectName() (string, error) {
+    wd, err := os.Getwd()
+    if err != nil {
+        return "", err
+    }
+
+    //TODO should check current directory / parent for a project name
+    return wd, nil
 }
